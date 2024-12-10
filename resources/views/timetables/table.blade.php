@@ -1,9 +1,8 @@
 @section('content')
-
-<div class="row">
+    <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>List of Timetables</h2>
+                <h2>Student Timetable</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('timetables.create') }}"> Add New Timetable</a>
@@ -20,23 +19,29 @@
     <table class="table table-bordered">
         <tr>
             <th>No</th>
-            <th>Subject Code</th>
-            <th>Subject Name</th>
-            <th>Created At</th>
+            <th>Day</th>
+            <th>Subject</th>
+            <th>Hall</th>
+            <th>Time From</th>
+            <th>Time To</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($timetable as $s)
+
+
+        @foreach ($timetables as $t)
         <tr>
-            <td>{{ $s->id }}</td>
-            <td>{{ $s->subject_code }}</td>
-            <td>{{ $s->subject_name }}</td>
-            <td>{{ $s->created_at }}</td>
+            <td>{{ $t->id }}</td>
+            <td>{{ $t->day->day_name}}</td>
+            <td>{{ $t->subject->subject_code }} - {{ $t->subject->subject_name  }}</td>
+            <td>{{ $t->hall->lecture_hall_name}} </td>
+            <td>{{ $t->time_from }}</td>
+            <td>{{ $t->time_to }} </td>
             <td>
-                <form action="{{ route('timetables.destroy',$s->id) }}" method="POST">
+                <form action="{{ route('timetables.destroy',$t->id) }}" method="POST">
    
-                    <a class="btn btn-info" href="{{ route('timetables.show',$s->id) }}">Show</a>
+                <a class="btn btn-info" href="{{ route('timetables.show',$t->id) }}">Show</a>
     
-                    <a class="btn btn-primary" href="{{ route('timetables.edit',$s->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('timetables.edit',$t->id) }}">Edit</a>
    
                     @csrf
                     @method('DELETE')
@@ -47,4 +52,3 @@
         </tr>
         @endforeach
     </table>
-@endsection
